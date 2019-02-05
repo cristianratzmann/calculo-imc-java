@@ -3,6 +3,10 @@ package calculoimc;
 
 import java.text.DecimalFormat;
 
+/**
+ * 
+ * Calcula o Imc
+ */
 
 public class Imc {
     
