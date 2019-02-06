@@ -261,7 +261,7 @@ gravar += ";";
 gravar += labelVlrImc.getText();
 gravar += ";";
 gravar += labelSituacaoImc.getText();
-gravar += "\n";
+gravar += "\n"; 
 
         try {
             c.gravar (gravar);
