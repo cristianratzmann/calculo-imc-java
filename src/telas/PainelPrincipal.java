@@ -6,6 +6,9 @@
 package telas;
 
 
+import br.com.caelum.stella.format.CPFFormatter;
+import br.com.caelum.stella.format.Formatter;
+import br.com.caelum.stella.format.NITFormatter;
 import calculoimc.Imc;
 import calculoimc.ManipulacaoDeArquivos;
 import java.io.IOException;
@@ -53,6 +56,8 @@ public class PainelPrincipal extends javax.swing.JPanel {
         cpNome = new javax.swing.JTextField();
         btSalvar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        cpCpf = new javax.swing.JFormattedTextField();
 
         jLabel1.setFont(new java.awt.Font("BankGothic Lt BT", 0, 24)); // NOI18N
         jLabel1.setText("Peso:");
@@ -121,6 +126,20 @@ public class PainelPrincipal extends javax.swing.JPanel {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("BankGothic Lt BT", 0, 23)); // NOI18N
+        jLabel6.setText("CPF:");
+
+        try {
+            cpCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        cpCpf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cpCpfActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,11 +154,12 @@ public class PainelPrincipal extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel5))
+                                    .addComponent(jLabel1))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cpNome)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(cpAltura, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
@@ -160,21 +180,30 @@ public class PainelPrincipal extends javax.swing.JPanel {
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(33, 33, 33)
                                 .addComponent(labelVlrImc, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 30, Short.MAX_VALUE)))
+                        .addGap(0, 30, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cpNome)
+                            .addComponent(cpCpf))))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(112, 112, 112))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5)
-                    .addComponent(cpNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cpNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cpCpf))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cpPeso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,7 +226,7 @@ public class PainelPrincipal extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(labelSituacaoImc))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -239,6 +268,10 @@ String numeroFormatado = df.format(vlrImc);
        else if(vlrImc > 30){
        labelSituacaoImc.setText("Obeso");}
        
+       
+       
+       
+       
     }//GEN-LAST:event_btnCalcularActionPerformed
 
     private void cpPesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpPesoActionPerformed
@@ -261,6 +294,8 @@ gravar += ";";
 gravar += labelVlrImc.getText();
 gravar += ";";
 gravar += labelSituacaoImc.getText();
+gravar +=";";
+gravar += cpCpf.getText();
 gravar += "\n"; 
 
         try {
@@ -289,11 +324,16 @@ labelVlrImc.setText("");
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void cpCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpCpfActionPerformed
+        
+    }//GEN-LAST:event_cpCpfActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSalvar;
     private javax.swing.JButton btnCalcular;
     private javax.swing.JTextField cpAltura;
+    private javax.swing.JFormattedTextField cpCpf;
     private javax.swing.JTextField cpNome;
     private javax.swing.JTextField cpPeso;
     private javax.swing.JButton jButton1;
@@ -302,6 +342,7 @@ labelVlrImc.setText("");
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel labelSituacaoImc;
